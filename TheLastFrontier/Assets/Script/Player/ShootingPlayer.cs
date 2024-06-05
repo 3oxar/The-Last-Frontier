@@ -45,7 +45,7 @@ public class ShootingPlayer : MonoBehaviour
             }
             else
             {
-                Instantiate(_prefabBullet, this.transform.position, Quaternion.identity);
+                Instantiate(_prefabBullet, this.transform.position, Quaternion.identity, this.gameObject.transform);
             }
             _checkAttack =true;
         }
@@ -63,7 +63,7 @@ public class ShootingPlayer : MonoBehaviour
     {
         while (_countBullet > 0)//стреляем пока не закончаться снаряды
         {
-            Instantiate(_prefabBullet, this.transform.position, Quaternion.identity);
+            Instantiate(_prefabBullet, this.transform.position, Quaternion.identity, this.gameObject.transform);
             _countBullet--;
             yield return new WaitForSeconds(0.3f);
         }

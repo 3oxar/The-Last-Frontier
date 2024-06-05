@@ -32,6 +32,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         collision.gameObject.GetComponent<Life>().Damage(_damage + _damageBuster);
         Destroy(this.gameObject);
     }

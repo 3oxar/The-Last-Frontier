@@ -3,10 +3,10 @@ using UnityEngine.AI;
 
 public class MoveEnemy : MonoBehaviour, IMove
 {
-    [SerializeField] private GameObject[] _travelPath;
-
     [SerializeField] private float _speed;
+    [SerializeField] private TravelPathEnemy _travelPathEnemy;
 
+    private Transform[] _travelPath;//массив точек в пути
     private NavMeshAgent _agent;
 
     private int _indexTravelPath;
@@ -21,11 +21,13 @@ public class MoveEnemy : MonoBehaviour, IMove
         _agent.updateUpAxis = false;
         _agent.speed = Speed;
 
+
+        _travelPath = _travelPathEnemy.FindChildObject();
+
         _indexTravelPath = 0;
         Move(_travelPath[0].transform.position.x, _travelPath[_indexTravelPath].transform.position.y);
     }
 
-    // Update is called once per frame
     void Update()
     {
         _distanse = (this.gameObject.transform.position - _travelPath[_indexTravelPath].transform.position).magnitude;
@@ -46,7 +48,6 @@ public class MoveEnemy : MonoBehaviour, IMove
 
     public void Move(float x, float y)
     {
-        Debug.Log(x + " " + y);
        _agent.SetDestination(new Vector2(x, y));
     }
 }

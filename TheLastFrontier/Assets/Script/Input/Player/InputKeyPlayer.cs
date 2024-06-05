@@ -29,14 +29,16 @@ public class InputKeyPlayer : MonoBehaviour
         else
             _verticalMove = -0.5f;
 
-        if (Input.GetButton("Jump"))
-            _hootingPlayer.FireAttack();
+        if(_hootingPlayer != null)
+            if (Input.GetButton("Jump"))
+                _hootingPlayer.FireAttack();
         
     }
 
     private void FixedUpdate()
     {
-        _movePlayerScript.Move(_horizontalMove, _verticalMove);
+        if(_movePlayerScript != null)
+            _movePlayerScript.Move(_horizontalMove, _verticalMove);
     }
 
    
