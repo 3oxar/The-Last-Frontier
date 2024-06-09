@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private int _damage;
     [SerializeField] private int _damageBuster;
-   
 
     private float _timeDestroy = 6;
 
@@ -20,6 +19,7 @@ public class Bullet : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
     }
 
     /// <summary>
@@ -27,12 +27,13 @@ public class Bullet : MonoBehaviour
     /// </summary>
     public void MoveBullet()
     {
-        this.transform.Translate(new Vector2(0, 0.1f) * _bulletSpeed);
+        if(Time.timeScale !=0) 
+            this.transform.Translate(new Vector2(0, 0.1f) * _bulletSpeed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        _damageBuster = LvlPLayer._lvlPlayer - 1;
         collision.gameObject.GetComponent<Life>().Damage(_damage + _damageBuster);
         Destroy(this.gameObject);
     }

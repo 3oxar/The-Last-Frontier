@@ -15,5 +15,4 @@ public class DeadPlayer : MonoBehaviour
             Destroy(_gamePlay);
         }
     }
-       
 }

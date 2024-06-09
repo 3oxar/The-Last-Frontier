@@ -11,6 +11,7 @@ public class MoveEnemy : MonoBehaviour, IMove
 
     private int _indexTravelPath;
     private float _distanse;
+    private bool _pursuit = false;
 
     public float Speed { get { return _speed; } set { _speed = value; } }
 
@@ -19,9 +20,8 @@ public class MoveEnemy : MonoBehaviour, IMove
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
-        _agent.speed = Speed;
-
-
+        _agent.speed = Speed + (LvlPLayer._lvlPlayer - 1);
+       
         _travelPath = _travelPathEnemy.FindChildObject();
 
         _indexTravelPath = 0;
@@ -41,11 +41,22 @@ public class MoveEnemy : MonoBehaviour, IMove
             }
             else
             {
-                Destroy(this.gameObject);
+                _pursuit = true;
             }
+        }
+
+        if(_pursuit == true)
+        {
+            if(GameObject.Find("PlayerSpaceship") != null)
+                _agent.destination = GameObject.Find("PlayerSpaceship").transform.position;
         }
     }
 
+    /// <summary>
+    /// движение противников
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     public void Move(float x, float y)
     {
        _agent.SetDestination(new Vector2(x, y));

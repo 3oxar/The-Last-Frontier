@@ -4,6 +4,8 @@ public class InputKeyPlayer : MonoBehaviour
 {
     [SerializeField] private MovePlayer _movePlayerScript;
     [SerializeField] private ShootingPlayer _hootingPlayer;
+    
+    public GameObject _panelStopGame;
 
     private float _horizontalMove;
     private float _verticalMove;
@@ -32,7 +34,9 @@ public class InputKeyPlayer : MonoBehaviour
         if(_hootingPlayer != null)
             if (Input.GetButton("Jump"))
                 _hootingPlayer.FireAttack();
-        
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            StopGamePLay();
     }
 
     private void FixedUpdate()
@@ -41,6 +45,11 @@ public class InputKeyPlayer : MonoBehaviour
             _movePlayerScript.Move(_horizontalMove, _verticalMove);
     }
 
-   
+    private void StopGamePLay()
+    {
+        Time.timeScale = 0f;
+        _panelStopGame.SetActive(true);
+    } 
+  
    
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class ShootingPlayer : MonoBehaviour
 {
     [SerializeField] private GameObject _prefabBullet;
+    [SerializeField] private AudioBullet _audioBullet;
 
     [SerializeField] private float _timeAttack;
     [SerializeField] private float _countBullet;
@@ -11,12 +12,15 @@ public class ShootingPlayer : MonoBehaviour
     private bool _checkAttack = false;
     private float _timeAttackStart;
     private float _countBulletStart;
+    
 
     private void Start()
     {
         _timeAttackStart = _timeAttack;
         _countBulletStart = _countBullet;
+      
     }
+
     private void Update()
     {
         if (_checkAttack == true)
@@ -39,14 +43,10 @@ public class ShootingPlayer : MonoBehaviour
     {
         if(_checkAttack == false)
         {
-            if(_countBullet > 0)//если зарядов больше 1
-            {
-                StartCoroutine(FireAttackCoroutine());
-            }
-            else
-            {
-                Instantiate(_prefabBullet, this.transform.position, Quaternion.identity, this.gameObject.transform);
-            }
+            _countBullet = LvlPLayer._lvlPlayer;
+           
+             StartCoroutine(FireAttackCoroutine());
+           
             _checkAttack =true;
         }
     }
@@ -63,7 +63,8 @@ public class ShootingPlayer : MonoBehaviour
     {
         while (_countBullet > 0)//стреляем пока не закончаться снаряды
         {
-            Instantiate(_prefabBullet, this.transform.position, Quaternion.identity, this.gameObject.transform);
+            Instantiate(_prefabBullet, this.transform.position, Quaternion.identity);
+            _audioBullet.AttackSound();
             _countBullet--;
             yield return new WaitForSeconds(0.3f);
         }
